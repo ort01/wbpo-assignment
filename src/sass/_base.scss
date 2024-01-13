@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+// ---------------------------BASE---------------------
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; //10/16=62.5% -> 1 rem = 10px
+
+    // @media only screen and (max-width: $bp-1200) {
+    //     font-size: 50%;
+    // }
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: $color-grey-dark;
+    background-color: $color-white;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.error {
+    color: red;
+    background: rgba(255, 192, 203, 0.616);
+    border: 0.1rem solid red;
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    margin: 1rem 0;
+}
