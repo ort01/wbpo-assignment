@@ -3,5 +3,5 @@ export default interface Note {
     text: string,
     isFinished: boolean,
     id: number,
-    order: number
+    order?: number
 }

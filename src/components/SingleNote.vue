@@ -3,8 +3,8 @@
         <router-link :to="{ name: 'details', params: { id: props.note.id } }" draggable="false">
             <div class="single-note__content">
                 <h3>{{ props.note.title }}</h3>
-                <!-- <p>{{ props.note.text.substring(0, 200) }}</p> -->
-                <p>{{ props.note.text }}</p>
+                <p v-if="props.note.text.length > 200">{{ props.note.text.substring(0, 200) }}......</p>
+                <p v-else>{{ props.note.text }}</p>
             </div>
         </router-link>
         <div class="single-note__options">
@@ -19,12 +19,13 @@
                 </span>
             </button>
         </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
 import Note from "../interfaces/Note"
-import { useNoteStore } from "../stores/NoteStore.js"
+import { useNoteStore } from "../stores/NoteStore.ts"
 
 
 //---pinia store
@@ -63,9 +64,22 @@ const props = defineProps<{
         }
     }
 
+    & a {
+        width: 100%;
+    }
+
+
     &__content {
         width: 100%;
         padding-bottom: 1.5rem;
+
+        @media only screen and (max-width: $bp-800) {
+            padding-bottom: 3rem;
+        }
+
+        @media only screen and (max-width: $bp-600) {
+            padding-bottom: 3rem;
+        }
 
         & h3 {
             font-size: 1.8rem;
@@ -80,10 +94,20 @@ const props = defineProps<{
         right: .5rem;
         bottom: .3rem;
         color: $color-grey-light;
-        transition: all .3s;
+        transition: all .2s;
+
+        @media only screen and (max-width: $bp-800) {
+            opacity: 1;
+        }
+
+        @media only screen and (max-width: $bp-600) {
+            opacity: 1;
+        }
 
         & button {
-            transition: all .3s;
+            transition: all .2s;
+
+            @media only screen and (max-width: $bp-600) {}
 
             &:hover {
                 color: rgb($color-grey-dark, .5);

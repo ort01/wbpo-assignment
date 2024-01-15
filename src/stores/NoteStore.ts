@@ -1,36 +1,22 @@
 import { defineStore } from 'pinia'
+import Note from '../interfaces/Note'
+
+interface NoteStoreState {
+  notes: Note[],
+  filter: 'all' | 'finished' | 'unfinished',
+  error: null | string,
+  isLoading: boolean
+}
 
 export const useNoteStore = defineStore('notes', {
-  state: () => ({
-    /** @type {{ title: string, text: string, id: number, isFinished: boolean}[]} */
+  state: (): NoteStoreState => ({
     notes: [],
-    /** @type {'all' | 'finished' | 'unfinished'} */
     filter: 'all',
-    /** @type { null | string} */
     error: null,
-    /** @type { boolean } */
     isLoading: false
   }),
   getters: {
-    finishedNotes(state) {
-      // autocompletion! ✨
-      return state.notes.filter((n) => n.isFinished)
-    },
-    unfinishedNotes(state) {
-      return state.notes.filter((n) => !n.isFinished)
-    },
-    /**
-     * @returns {{ title: string, text: string, id: number, isFinished: boolean }[]}
-     */
-    filteredTodos(state) {
-      if (this.filter === 'finished') {
-        // call other getters with autocompletion ✨
-        return this.finishedTodos
-      } else if (this.filter === 'unfinished') {
-        return this.unfinishedTodos
-      }
-      return this.todos
-    },
+
   },
   actions: {
     async getNotes() {
@@ -43,24 +29,27 @@ export const useNoteStore = defineStore('notes', {
         if (!res.ok) {
           throw new Error("Something went wrong with getNotes")
         } else {
-          this.notes = data.toSorted((note1, note2) => note1.order - note2.order)
-          console.log(this.notes)
+          this.notes = data.toSorted((note1: Note, note2: Note) => {
+            if (note1.order != undefined && note2.order != undefined) {
+              return note1.order - note2.order
+            }
+          })
           this.error = null
         }
 
       } catch (err) {
-        this.error = err.message
+        this.error = (err as Error).message
       }
 
       this.isLoading = false
     },
 
-    async addNote(note) {
-
+    async addNote(note: Note) {
+      note.order = this.notes.length
       try {
         const res = await fetch('http://localhost:3000/notes', {
           method: 'POST',
-          body: JSON.stringify({ ...note, order: this.notes.length }),
+          body: JSON.stringify(note),
           headers: { 'Content-Type': 'application/json' }
         })
         if (!res.ok) {
@@ -70,11 +59,12 @@ export const useNoteStore = defineStore('notes', {
           this.error = null
         }
       } catch (err) {
-        this.error = err.message
+        this.error = (err as Error).message
       }
     },
 
-    async deleteNote(id) {
+
+    async deleteNote(id: number) {
       try {
         const res = await fetch(`http://localhost:3000/notes/${id}`, {
           method: 'DELETE'
@@ -91,32 +81,60 @@ export const useNoteStore = defineStore('notes', {
         }
 
       } catch (err) {
-        this.error = err.message
+        this.error = (err as Error).message
       }
     },
 
-    async toggleIsFinished(id) {
-      const note = this.notes.find((n) => n.id == id)
-      note.isFinished = !note.isFinished
+    async updateNote(id: number, updatedNote: { title: string, text: string }) {
+      const noteIndex = this.notes.findIndex((n) => n.id == id)
+      this.notes[noteIndex].title = updatedNote.title
+      this.notes[noteIndex].text = updatedNote.text
 
       try {
         const res = await fetch(`http://localhost:3000/notes/${id}`, {
           method: 'PATCH',
-          body: JSON.stringify({ isFinished: note.isFinished }),
+          body: JSON.stringify(updatedNote),
           headers: { 'Content-Type': 'application/json' }
         })
 
         if (!res.ok) {
-          throw new Error("Something went wrong with toggleIsFinished")
+          throw new Error("Something went wrong with updateNote")
         } else {
           this.error = null
         }
 
       } catch (err) {
-        this.error = err.message
+        this.error = (err as Error).message
       }
     },
-    updateNotesOrder(reorderedNotes) {
+
+    async toggleIsFinished(id: number) {
+      const note = this.notes.find((n) => n.id == id)
+      if (note) {
+        note.isFinished = !note.isFinished
+
+        try {
+          const res = await fetch(`http://localhost:3000/notes/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify({ isFinished: note.isFinished }),
+            headers: { 'Content-Type': 'application/json' }
+          })
+
+          if (!res.ok) {
+            throw new Error("Something went wrong with toggleIsFinished")
+          } else {
+            this.error = null
+          }
+
+        } catch (err) {
+          this.error = (err as Error).message
+        }
+      } else {
+        console.log("Note not found")
+      }
+
+    },
+    updateNotesOrder(reorderedNotes: Note[]) {
       reorderedNotes.forEach(async (note, index) => {
 
         try {
@@ -133,7 +151,7 @@ export const useNoteStore = defineStore('notes', {
           }
 
         } catch (err) {
-          this.error = err.message
+          this.error = (err as Error).message
         }
 
       })

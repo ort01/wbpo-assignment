@@ -1,30 +1,97 @@
 <template>
-    <div class="details-bg">
-        <div class="details-content" @backdrop-click="">
-            Content
+    <div class="details relative max-w-7xl mx-auto my-40 p-6 text-xl border rounded-md shadow-lg">
+        <div v-if="note" class="p-8">
+            <div v-if="!edit">
+                <h3 class="mb-8 text-4xl font-normal border-b-2 border-gray-200">
+                    {{ note.title }}
+                </h3>
+                <p class="mb-4 text-2xl">{{ note.text }}</p>
+            </div>
+            <div v-if="edit">
+                <form @submit.prevent="handleSave">
+                    <input v-model="editTitle"
+                        class="block w-full mb-8 text-4xl font-normal border-b-2 border-gray-200 outline-none" />
+                    <textarea v-model="editText"
+                        class="mb-6 w-full text-2xl min-h-[30rem] resize-none outline-none"></textarea>
+                </form>
+            </div>
+
+            <button v-if="edit" @click="handleSave" class="absolute right-4 bottom-2 text-gray-300 hover:text-gray-400">
+                <span class="material-symbols-outlined">
+                    save
+                </span>
+            </button>
+            <button v-else @click="handleEdit" class="absolute right-4 bottom-2 text-gray-300 hover:text-gray-400">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+            </button>
+
+        </div>
+        <div v-if="isLoading">
+            Loading...
+        </div>
+        <div class="error" v-if="error">
+            {{ error }}
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import Note from "../interfaces/Note";
+import { useNoteStore } from "../stores/NoteStore.js"
+import { useRoute } from 'vue-router'
+import { computed } from "vue";
+import { ref } from "vue";
+
+
+//---pinia store
+const noteStore = useNoteStore()
+const { notes, error, isLoading } = storeToRefs(noteStore)
+
+//route to get the id from url
+const route = useRoute()
+
+//state
+const edit = ref<boolean>(false)
+const editTitle = ref<string>("")
+const editText = ref<string>("")
+
+if (!notes.value.length) {
+    noteStore.getNotes()
+}
+
+const note = computed(() => {
+    if (notes) {
+        return notes.value.find((n: Note) => n.id == Number.parseInt(route.params.id as string))
+    } else {
+        return undefined
+    }
+})
+
+const handleSave = () => {
+    edit.value = false
+    if (note.value) {
+        noteStore.updateNote(note.value.id, { title: editTitle.value, text: editText.value })
+    }
+
+}
+
+const handleEdit = () => {
+    edit.value = true
+    if (note.value) {
+        editTitle.value = note.value.title
+        editText.value = note.value.text
+    }
+}
 
 </script>
 
 <style lang="scss" scoped>
-.details-bg {
-    position: relative;
-    opacity: .4;
-    background-color: $color-grey-dark;
-    height: 100vh;
-    width: 100vw;
-}
-
-.details-content {
-    position: absolute;
-    background-color: white;
-    padding: 20rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.details {
+    @media only screen and (max-width: $bp-800) {
+        width: 50rem;
+    }
 }
 </style>

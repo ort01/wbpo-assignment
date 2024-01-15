@@ -18,7 +18,7 @@
 <script setup lang="ts">
 //imports
 import SingleNote from "./SingleNote.vue"
-import { useNoteStore } from "../stores/NoteStore.js"
+import { useNoteStore } from "../stores/NoteStore.ts"
 import { storeToRefs } from "pinia";
 import draggable from "vuedraggable"
 

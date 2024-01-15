@@ -2,31 +2,31 @@
   "notes": [
     {
       "id": 1,
-      "title": "play last of us",
-      "text": "blablabla",
-      "isFinished": false,
-      "order": 2
-    },
-    {
-      "title": "Try to relax",
-      "text": "-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30rem;\n    max-width: 30rem;min-width: 30r\n",
-      "isFinished": false,
-      "id": 74739,
+      "title": "Make Breakfast",
+      "text": "Eggs.",
+      "isFinished": true,
       "order": 0
     },
     {
-      "title": "asdddddd",
-      "text": "dfgdfgsdfgsdfgdfgdfgsdfgsdfgdfgdfgsdfgsdfgdfgdfgsdfgsdfgdfgdfgsdfgsdfgdfgdfgsdfgsdfgdfgdfgsdfgsdfg",
+      "title": "Exercise",
+      "text": "20x Burpees",
       "isFinished": false,
-      "id": 17815,
-      "order": 3
+      "id": 74739,
+      "order": 1
     },
     {
-      "title": "asda",
-      "text": "fjhgd dfkgjhdfg dkfjghdf gdfghdf gdsfjgh sdfgskdjfhg sdfr gsdf gsdfg\n",
+      "title": "Fight Existential Dread",
+      "text": "🫠",
+      "isFinished": false,
+      "id": 17815,
+      "order": 2
+    },
+    {
+      "title": "Vacuum",
+      "text": "...why",
       "isFinished": false,
       "id": 41640,
-      "order": 1
+      "order": 3
     }
   ]
 }

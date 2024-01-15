@@ -10,8 +10,6 @@
 import CreateNote from "../components/CreateNote.vue"
 import NotesList from "../components/NotesList.vue"
 
-import { useNoteStore } from "../stores/NoteStore.js"
-
 </script>
 
 

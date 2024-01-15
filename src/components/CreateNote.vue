@@ -1,18 +1,31 @@
 <template>
     <div>
-        <form class="create-note-form" :class="{ expand: createNoteState }" @submit.prevent="handleSubmit"
-            @backdrop-click="createNoteState = false">
-            <input placeholder="Title" v-model="title" v-if="createNoteState" />
-            <textarea placeholder="Add a note..." v-model="text" @click="createNoteState = true">
+        <form @submit.prevent="handleSubmit"
+            class="relative w-[48rem] h-auto m-16 mx-auto bg-white rounded-lg p-4 shadow-md border"
+            :class="{ expand: createNoteState }">
+            <input placeholder="Title" v-model="title" v-if="createNoteState"
+                class="w-full border-none p-1 outline-none text-3xl font-inherit font-light resize-none" />
+            <textarea placeholder="Add a note..." v-model="text" @click="createNoteState = true"
+                class="w-full border-none p-1 outline-none text-3xl font-inherit font-light resize-none h-11">
             </textarea>
-            <button v-if="createNoteState" @click="handleSubmit">+</button>
+            <button class="text-4xl text-white absolute bottom-[-2.2rem] right-4 bg-amber-300 py-4 px-6 rounded-full"
+                v-if="createNoteState" @click="handleSubmit">+</button>
+            <button class="text-white absolute bottom-[-1.5rem] left-4 bg-gray-300 py-1 px-2 rounded-full"
+                v-if="createNoteState" @click="createNoteState = false">
+                <span class="material-symbols-outlined">
+                    keyboard_arrow_up
+                </span>
+            </button>
         </form>
     </div>
 </template>
 
+
+
+
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useNoteStore } from "../stores/NoteStore.js"
+import { useNoteStore } from "../stores/NoteStore.ts"
 
 
 //---pinia store
@@ -36,65 +49,30 @@ const handleSubmit = () => {
         })
         title.value = ""
         text.value = ""
+        createNoteState.value = false
     }
 }
 </script>
 
 
 
+
 <style lang="scss" scoped>
 form {
-    position: relative;
-    width: 48rem;
-    height: auto;
-    margin: 4rem auto;
-    background: $color-white;
-    border-radius: .5rem;
-    padding: 1rem 1.5rem .5rem;
-    box-shadow: 0 1px 4px rgb(138, 137, 137);
-
-    & input,
-    & textarea {
-        width: 100%;
-        border: none;
-        padding: .4rem;
-        outline: none;
-        font-size: 2rem;
-        font-family: inherit;
-        font-weight: 300;
-        resize: none;
+    @media only screen and (max-width: $bp-600) {
+        width: 35rem;
     }
+}
 
-    & input {
-        font-weight: 400;
-    }
+.expand {
+    padding-bottom: 2.5rem;
 
     & textarea {
-        height: 4rem;
-    }
-
-    & button {
-        font-size: 3rem;
-        color: $color-white;
-        position: absolute;
-        bottom: -2.2rem;
-        right: 1rem;
-        background-color: rgb($color-primary, 1);
-        padding: 0 1.4rem;
-        border-radius: 50%;
-
-    }
-
-    &.expand {
-        padding-bottom: 2.5rem;
-
-        & textarea {
-            display: block;
-            font-size: 1.5rem;
-            min-height: 20rem;
-            max-height: 50rem;
-            height: auto;
-        }
+        display: block;
+        font-size: 1.5rem;
+        min-height: 20rem;
+        max-height: 50rem;
+        height: auto;
     }
 }
 </style>

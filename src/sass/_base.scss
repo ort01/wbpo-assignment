@@ -13,9 +13,13 @@ html {
     box-sizing: border-box;
     font-size: 62.5%; //10/16=62.5% -> 1 rem = 10px
 
-    // @media only screen and (max-width: $bp-1200) {
-    //     font-size: 50%;
-    // }
+    @media only screen and (max-width: $bp-1200) {
+        font-size: 50%;
+    }
+
+    @media only screen and (max-width: $bp-600) {
+        font-size: 35%;
+    }
 }
 
 body {
@@ -38,5 +42,5 @@ a {
     border: 0.1rem solid red;
     border-radius: 0.4rem;
     padding: 0.8rem;
-    margin: 1rem 0;
+    margin: 1rem auto;
 }
