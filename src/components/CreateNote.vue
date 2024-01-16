@@ -59,6 +59,8 @@ const handleSubmit = () => {
 
 <style lang="scss" scoped>
 form {
+    animation: fade 1s;
+
     @media only screen and (max-width: $bp-600) {
         width: 35rem;
     }

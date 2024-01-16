@@ -16,3 +16,14 @@ $bp-1200: 75em; //1200px / 16px
 $bp-1000: 62.5em;
 $bp-800: 50em;
 $bp-600: 37.5em;
+
+// -----------------Animations----------------
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

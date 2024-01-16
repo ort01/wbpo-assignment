@@ -90,6 +90,8 @@ const handleEdit = () => {
 
 <style lang="scss" scoped>
 .details {
+    animation: fade 1s;
+
     @media only screen and (max-width: $bp-800) {
         width: 50rem;
     }

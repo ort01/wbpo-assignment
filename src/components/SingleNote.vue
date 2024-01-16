@@ -19,7 +19,6 @@
                 </span>
             </button>
         </div>
-
     </div>
 </template>
 
@@ -43,6 +42,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .single-note {
+    animation: fade 1s;
     position: relative;
     background-color: $color-white;
     min-width: 30rem;
