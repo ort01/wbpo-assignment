@@ -3,7 +3,6 @@ import Note from '../interfaces/Note'
 
 interface NoteStoreState {
   notes: Note[],
-  filter: 'all' | 'finished' | 'unfinished',
   error: null | string,
   isLoading: boolean
 }
@@ -11,7 +10,6 @@ interface NoteStoreState {
 export const useNoteStore = defineStore('notes', {
   state: (): NoteStoreState => ({
     notes: [],
-    filter: 'all',
     error: null,
     isLoading: false
   }),
