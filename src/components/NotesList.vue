@@ -6,7 +6,7 @@
                 <SingleNote :note="note" />
             </template>
         </draggable>
-        <div v-if="isLoading">
+        <div v-if="isLoading" class="loading">
             Loading...
         </div>
         <div v-if="error">

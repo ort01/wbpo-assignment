@@ -5,21 +5,21 @@
       "title": "Make Breakfast",
       "text": "Eggs.",
       "isFinished": true,
-      "order": 0
+      "order": 2
     },
     {
       "title": "Exercise",
       "text": "20x Burpees",
-      "isFinished": false,
+      "isFinished": true,
       "id": 74739,
-      "order": 1
+      "order": 0
     },
     {
       "title": "Fight Existential Dread",
       "text": "🫠",
       "isFinished": false,
       "id": 17815,
-      "order": 2
+      "order": 1
     },
     {
       "title": "Vacuum",

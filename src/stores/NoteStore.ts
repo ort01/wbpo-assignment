@@ -53,7 +53,7 @@ export const useNoteStore = defineStore('notes', {
         if (!res.ok) {
           throw new Error("Something went wrong with addNote")
         } else {
-          this.notes.push(note)
+          this.notes.push(note) // Frontend Change
           this.error = null
         }
       } catch (err) {
@@ -63,6 +63,7 @@ export const useNoteStore = defineStore('notes', {
 
 
     async deleteNote(id: number) {
+      // Backend Change
       try {
         const res = await fetch(`http://localhost:3000/notes/${id}`, {
           method: 'DELETE'
@@ -71,6 +72,7 @@ export const useNoteStore = defineStore('notes', {
         if (!res.ok) {
           throw new Error("Something went wrong with deleteNote")
         } else {
+          // Frontend Change
           this.notes = this.notes.filter((n) => {
             return n.id !== id
           })
@@ -84,10 +86,7 @@ export const useNoteStore = defineStore('notes', {
     },
 
     async updateNote(id: number, updatedNote: { title: string, text: string }) {
-      const noteIndex = this.notes.findIndex((n) => n.id == id)
-      this.notes[noteIndex].title = updatedNote.title
-      this.notes[noteIndex].text = updatedNote.text
-
+      // Backend Change
       try {
         const res = await fetch(`http://localhost:3000/notes/${id}`, {
           method: 'PATCH',
@@ -98,6 +97,10 @@ export const useNoteStore = defineStore('notes', {
         if (!res.ok) {
           throw new Error("Something went wrong with updateNote")
         } else {
+          // Frontend Change
+          const noteIndex = this.notes.findIndex((n) => n.id == id)
+          this.notes[noteIndex].title = updatedNote.title
+          this.notes[noteIndex].text = updatedNote.text
           this.error = null
         }
 
@@ -109,18 +112,19 @@ export const useNoteStore = defineStore('notes', {
     async toggleIsFinished(id: number) {
       const note = this.notes.find((n) => n.id == id)
       if (note) {
-        note.isFinished = !note.isFinished
-
+        // Backend Change
         try {
           const res = await fetch(`http://localhost:3000/notes/${id}`, {
             method: 'PATCH',
-            body: JSON.stringify({ isFinished: note.isFinished }),
+            body: JSON.stringify({ isFinished: !note.isFinished }),
             headers: { 'Content-Type': 'application/json' }
           })
 
           if (!res.ok) {
             throw new Error("Something went wrong with toggleIsFinished")
           } else {
+            // Frontend Change
+            note.isFinished = !note.isFinished
             this.error = null
           }
 
@@ -133,12 +137,16 @@ export const useNoteStore = defineStore('notes', {
 
     },
     updateNotesOrder(reorderedNotes: Note[]) {
-      reorderedNotes.forEach(async (note, index) => {
+      // Frontend Change
+      this.notes = reorderedNotes.map((note, index) => ({ ...note, order: index }))
+
+      // Backend Change
+      this.notes.forEach(async (note) => {
 
         try {
           const res = await fetch(`http://localhost:3000/notes/${note.id}`, {
             method: 'PATCH',
-            body: JSON.stringify({ order: index }),
+            body: JSON.stringify({ order: note.order }),
             headers: { 'Content-Type': 'application/json' }
           })
 
