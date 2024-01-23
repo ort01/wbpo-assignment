@@ -4,8 +4,8 @@
       "id": 1,
       "title": "Make Breakfast",
       "text": "Eggs.",
-      "isFinished": true,
-      "order": 2
+      "isFinished": false,
+      "order": 1
     },
     {
       "title": "Exercise",
@@ -19,7 +19,7 @@
       "text": "🫠",
       "isFinished": false,
       "id": 17815,
-      "order": 1
+      "order": 2
     },
     {
       "title": "Vacuum",

@@ -9,7 +9,7 @@
         <div v-if="isLoading" class="loading">
             Loading...
         </div>
-        <div v-if="error">
+        <div v-if="error" class="error">
             {{ error }}
         </div>
     </div>

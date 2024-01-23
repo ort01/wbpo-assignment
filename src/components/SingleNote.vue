@@ -117,10 +117,10 @@ const props = defineProps<{
 }
 
 .greenBorder {
-    border: 1px solid rgb(103, 199, 103);
+    border: 1px solid $color-green;
 
     & .done {
-        color: rgb(103, 199, 103);
+        color: $color-green;
     }
 }
 </style>

@@ -17,6 +17,7 @@
                 </span>
             </button>
         </form>
+        <div class="error" v-if="error">{{ error }}</div>
     </div>
 </template>
 
@@ -36,6 +37,7 @@ const noteStore = useNoteStore()
 const title = ref<string>('')
 const text = ref<string>('')
 const createNoteState = ref<boolean>(false)
+const error = ref<string>('')
 
 
 //functions
@@ -50,6 +52,8 @@ const handleSubmit = () => {
         title.value = ""
         text.value = ""
         createNoteState.value = false
+    } else {
+        error.value = "You cannot add an empty note"
     }
 }
 </script>

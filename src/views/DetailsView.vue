@@ -28,10 +28,10 @@
             </button>
 
         </div>
-        <div v-if="isLoading">
+        <div v-if="isLoading" class="loading">
             Loading...
         </div>
-        <div class="error" v-if="error">
+        <div v-if="error" class="error">
             {{ error }}
         </div>
     </div>
