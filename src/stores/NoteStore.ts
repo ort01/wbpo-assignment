@@ -42,18 +42,19 @@ export const useNoteStore = defineStore('notes', {
       this.isLoading = false
     },
 
-    async addNote(note: Note) {
-      note.order = this.notes.length
+    async addNote(newNote: Note) {
+      newNote.order = this.notes.length
+
       try {
         const res = await fetch('http://localhost:3000/notes', {
           method: 'POST',
-          body: JSON.stringify(note),
+          body: JSON.stringify(newNote),
           headers: { 'Content-Type': 'application/json' }
         })
         if (!res.ok) {
           throw new Error("Something went wrong with addNote")
         } else {
-          this.notes.push(note) // Frontend Change
+          this.notes.push(newNote) // Frontend Change
           this.error = null
         }
       } catch (err) {
@@ -110,13 +111,13 @@ export const useNoteStore = defineStore('notes', {
     },
 
     async toggleIsFinished(id: number) {
-      const note = this.notes.find((n) => n.id == id)
-      if (note) {
+      const toggledNote = this.notes.find((n) => n.id == id)
+      if (toggledNote) {
         // Backend Change
         try {
           const res = await fetch(`http://localhost:3000/notes/${id}`, {
             method: 'PATCH',
-            body: JSON.stringify({ isFinished: !note.isFinished }),
+            body: JSON.stringify({ isFinished: !toggledNote.isFinished }),
             headers: { 'Content-Type': 'application/json' }
           })
 
@@ -124,7 +125,7 @@ export const useNoteStore = defineStore('notes', {
             throw new Error("Something went wrong with toggleIsFinished")
           } else {
             // Frontend Change
-            note.isFinished = !note.isFinished
+            toggledNote.isFinished = !toggledNote.isFinished
             this.error = null
           }
 

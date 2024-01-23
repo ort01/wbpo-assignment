@@ -50,6 +50,9 @@ import { ref } from "vue";
 const noteStore = useNoteStore()
 const { notes, error, isLoading } = storeToRefs(noteStore)
 
+noteStore.getNotes()
+
+
 //route to get the id from url
 const route = useRoute()
 
@@ -58,10 +61,7 @@ const edit = ref<boolean>(false)
 const editTitle = ref<string>("")
 const editText = ref<string>("")
 
-if (!notes.value.length) {
-    noteStore.getNotes()
-}
-
+//getting the specific note
 const note = computed(() => {
     if (notes) {
         return notes.value.find((n: Note) => n.id == Number.parseInt(route.params.id as string))
@@ -70,16 +70,20 @@ const note = computed(() => {
     }
 })
 
+//functions
 const handleSave = () => {
-    edit.value = false
+
     if (note.value) {
         noteStore.updateNote(note.value.id, { title: editTitle.value, text: editText.value })
     }
 
+    edit.value = false
 }
 
 const handleEdit = () => {
+
     edit.value = true
+
     if (note.value) {
         editTitle.value = note.value.title
         editText.value = note.value.text
@@ -87,6 +91,9 @@ const handleEdit = () => {
 }
 
 </script>
+
+
+
 
 <style lang="scss" scoped>
 .details {
